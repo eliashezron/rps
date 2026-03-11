@@ -1,8 +1,57 @@
 import express from 'express';
+import { paymentMiddleware } from 'x402-express';
 
 const app = express();
 
 app.use(express.json());
+
+app.use(paymentMiddleware("0x41Ad4f7A089e1e2cbF43250325aC482823987e6A",
+    {
+    "POST /rps/play": {
+        price: "$0.001", // 0.01 ETH
+        network: "base-sepolia",
+        config: {
+            // Optional: Additional configuration for the payment middleware
+            name: "Rock Paper Scissors Game",
+            description: "Play a game of Rock Paper Scissors against the server",
+            discoverable: true, // Whether this endpoint should be discoverable in the payment system   
+            inputSchema: { 
+                type: "object",
+                properties: {
+                    move: {
+                        type: "string",
+                        enum: ["rock", "paper", "scissors"],
+                        description: "The player's move"
+                    }
+                },
+                required: ["move"]
+            },
+            outputSchema: {
+                type: "object",
+                properties: {
+                    playerMove: {
+                        type: "string",
+                        description: "The player's move"
+                    },
+                    serverMove: {
+                        type: "string",
+                        description: "The server's move"
+                    },
+                    outcome: {
+                        type: "string",
+                        enum: ["win", "lose", "draw"],
+                        description: "The outcome of the game"
+                    }
+                }
+            },
+            
+        }
+    }
+    },
+    {
+    url: "https://x402.org/facilitator", 
+    }
+)); 
 
 const move = ['rock', 'paper', 'scissors'];
 function determineOutcome(playerMove, serverMove) {
