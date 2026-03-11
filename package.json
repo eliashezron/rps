@@ -8,7 +8,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node index.js"
+    "dev": "node index.js",
+    "build": "node --check index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "@coinbase/cdp-sdk": "^1.45.0",
