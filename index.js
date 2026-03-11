@@ -87,6 +87,8 @@ app.post('/rps/play', (req, res) => {
     }
 });
 
-app.listen(4021, () => {
-  console.log('Server is running on port 4021');
+const port = Number(process.env.PORT) || 4021;
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
